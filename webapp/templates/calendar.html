@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Calendar</title>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='view_calendar.css') }}">
+
+
+</head>
+<body>
+    <div class="calendar-container">
+        <h1 class="calendar-title">View Calendar</h1>
+
+        <label for="timeMin">Start Date and Time:</label>
+        <input type="datetime-local" id="timeMin" name="timeMin">
+
+        <label for="maxResults">Number of Events to Retrieve:</label>
+        <input type="number" id="maxResults" name="maxResults" value="10">
+
+        <!-- Button to fetch events based on user input -->
+        <button id="fetchEventsButton" style="background-color: #3286e3; color: #ffffff;">Fetch Events</button>
+
+        <div class="view-toggle">
+            <button id="list-view-button">List View</button>
+            <button id="calendar-view-button">Calendar View</button>
+        </div>
+
+        <button id="go-back-button">Go Back</button>
+
+        <!-- List View -->
+        <ul class="calendar-events" id="list-view">
+        </ul>
+
+        <!-- Calendar View -->
+        <div id="calendar"></div> <!-- This is where the FullCalendar will be rendered -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Define initial events variable
+            var initialEvents = {{ events | tojson | safe }};
+
+            // Initialize FullCalendar
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                initialDate: new Date(), // Set initialDate to the current date
+                events: initialEvents  // Initial events for the calendar
+            });
+            calendar.render();
+
+            var listButton = document.getElementById('list-view-button');
+            var calendarButton = document.getElementById('calendar-view-button');
+            var goBackButton = document.getElementById('go-back-button');
+            var listView = document.getElementById('list-view');
+            var calendarView = document.getElementById('calendar');
+
+            listButton.addEventListener('click', function () {
+                listView.style.display = 'block';
+                calendarView.style.display = 'none';
+            });
+
+            calendarButton.addEventListener('click', function () {
+                listView.style.display = 'none';
+                calendarView.style.display = 'block';
+            });
+
+            goBackButton.addEventListener('click', function () {
+                window.history.back();
+            });
+
+            // Button to fetch events based on user input
+            var fetchEventsButton = document.getElementById('fetchEventsButton');
+            fetchEventsButton.addEventListener('click', function () {
+                var timeMin = document.getElementById('timeMin').value;
+                var maxResults = document.getElementById('maxResults').value;
+
+                // Example: Fetch events based on user input
+                fetchEvents(timeMin, maxResults);
+            });
+
+            // Function to fetch events dynamically based on user input
+            function fetchEvents(timeMin, maxResults) {
+                // Format timeMin as ISO 8601 with UTC time
+                var isoTimeMin = new Date(timeMin + "Z").toISOString();
+
+                $.ajax({
+                    url: `/get_events?timeMin=${isoTimeMin}&maxResults=${maxResults}`,
+                    method: 'GET',
+                    success: function (data) {
+                        // Update the events variable and re-render the calendar
+                        calendar.setOption('events', data);
+                        // Update the list view dynamically
+                        updateListView(data);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching events:', error);
+                    }
+                });
+            }
+            // Set default value for timeMin input field to the current date and time
+            var timeMinInput = document.getElementById('timeMin');
+            var now = new Date();
+            var defaultTimeMin = now.toISOString().slice(0, 16); // Format: 'YYYY-MM-DDTHH:mm'
+            timeMinInput.value = defaultTimeMin;
+
+            // Trigger click on the "Fetch Events" button to load events for the default date
+            var fetchEventsButton = document.getElementById('fetchEventsButton');
+            fetchEventsButton.click();
+
+            // Function to update the list view dynamically
+            function updateListView(events) {
+                var listContainer = document.getElementById('list-view');
+                listContainer.innerHTML = '';  // Clear previous content
+
+                events.forEach(function (event) {
+                    var listItem = document.createElement('li');
+                    listItem.className = 'calendar-event';
+                    listItem.innerHTML = `
+                        <div class="event-details">
+                            <span class="event-time">${event.start.dateTime}</span>
+                            <div class="event-title">${event.summary}</div>
+                        </div>
+                    `;
+                    listContainer.appendChild(listItem);
+                });
+            }
+
+            // Example: Fetch events for the initial time range and max results
+            fetchEvents(new Date().toISOString(), 10); // Fetch events for today
+        });
+    </script>
+</body>
+</html>

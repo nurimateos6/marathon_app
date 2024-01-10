@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Task Planning</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Task Planning</h1>
+    </header>
+
+    <div class="options">
+        <a href="/"><i class="fas fa-home"></i></a>
+    </div>
+
+    <div class="create-activity">
+        <h2>Create Activity</h2>
+        <form action="/submit_activity" method="POST">
+            <label for="activity_type">Activity Type:</label>
+            <select id="activity_type" name="activity_type" required>
+                <option value="running">Running</option>
+                <option value="trail_running">Trail Running</option>
+                <option value="indoor_running">Indoor Running</option>
+                <option value="cycling">Cycling</option>
+                <option value="lifting">Lifting</option>
+            </select>
+
+            <label for="activity_date">Activity Date:</label>
+            <input type="date" name="activity_date" required><br>
+
+            <label for="activity_description">Activity Description:</label>
+            <textarea name="activity_description" required></textarea><br>
+
+            <input type="submit" value="Create Activity">
+        </form>
+    </div>
+
+    <!-- Add this div for displaying messages -->
+    <div id="message">
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Go Back Button -->
+    <button id="go-back-button">Go Back</button>
+    <script>
+        // JavaScript to handle the button click event
+        document.getElementById("go-back-button").addEventListener("click", function() {
+            window.location.href = "/";
+        });
+    </script>
+
+</body>
+</html>

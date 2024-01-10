@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='garmin.css') }}">
+    <title>Today's activity</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        canvas {
+            max-width: 600px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Garmin Connect Activities</h2>
+
+<!-- Table to display activities -->
+<table id="activitiesTable">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Activity Type</th>
+            <th>Distance (km)</th>
+            <th>Duration (min)</th>
+            <th>Average Speed</th>
+            <th>Max Speed</th>
+            <th>Calories</th>
+            <th>Average HR</th>
+            <th>Max HR</th>
+            <th>Aerobic TE</th>
+            <th>Anaerobic TE</th>
+        </tr>
+    </thead>
+    <tbody id="activitiesTableBody">
+    </tbody>
+</table>
+
+
+<canvas id="activityChart"></canvas>
+
+<script>
+    // Assuming you have a variable 'activitiesData' containing the data from your Python function
+    var activitiesData = {{ activities | tojson | safe }};
+
+    function visualizeData(data) {
+        var labels = data.map(activity => activity.distance || 0);
+        var speeds = data.map(activity => activity.averageSpeed || 0);
+
+        // Chart.js configuration
+        var ctx = document.getElementById('activityChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Average Speed per Kilometer',
+                    data: speeds,
+                    backgroundColor: 'rgba(75, 192, 192, 0.8)',  // Bar color (e.g., blue-green)
+                    borderColor: 'rgba(75, 192, 192, 1)',  // Border color (e.g., slightly darker blue-green)
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Distance (km)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Average Speed (km/h)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Chart.js configuration for the line chart
+        var ctx = document.getElementById('activityChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: kilometers,
+                datasets: [{
+                    label: 'Average Speed',
+                    data: speeds,
+                    fill: false,
+                    borderColor: 'rgba(75, 192, 192, 1)',  // Line color (e.g., blue-green)
+                    borderWidth: 2,
+                    pointRadius: 6,
+                    pointBackgroundColor: 'rgba(75, 192, 192, 1)',  // Point color (e.g., blue-green)
+                    pointBorderColor: 'rgba(255, 255, 255, 1)',  // Point border color (e.g., white)
+                    pointHoverRadius: 8,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'linear',
+                        position: 'bottom',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Distance (km)'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Speed (km/h)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Function to calculate average speed for a specific kilometer
+    function calculateAverageSpeedForKilometer(splitsData, kilometer) {
+        // Find the split corresponding to the kilometer
+        var split = splitsData.find(split => split.distance === kilometer);
+
+        // If split is found, return its average speed, otherwise return 0
+        return split ? split.averageSpeed : 0;
+    }
+
+    function displayActivities(data) {
+        visualizeData(data);
+    }
+
+    displayActivities(activitiesData);
+
+</script>
+
+<!-- Go Back Button -->
+<button id="go-back-button">Go Back</button>
+<script>
+    // JavaScript to handle the button click event
+    document.getElementById("go-back-button").addEventListener("click", function () {
+        window.location.href = "/";
+    });
+</script>
+
+</body>
+</html>

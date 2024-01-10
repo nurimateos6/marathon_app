@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Marathon App</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+
+</head>
+<body>
+    <h1>My Marathon App</h1>
+    
+    <!-- Sport Image -->
+    <div class="sport-image">
+        <img src="{{ url_for('static', filename='images/running.jpg') }}" alt="Running Image">
+    </div>
+
+    <!-- Navigation Options -->
+    <div class="options">
+        <ul>
+            <li><a href="/training_tracking">My day</a></li>
+            <li><a href="/task_planning">Task Planning</a></li>
+            <li><a href="/my_garmin_area">My Activities</a></li>
+            <li><a href="/view_calendar">View Calendar</a></li>
+            <li><a href="/call_chat">Chatbot</a></li>
+        </ul>
+    </div>
+
+    <!-- Credits -->
+    <div class="credit">
+        <p>Created by Nuria Mateos García</p>
+    </div>
+
+    <!-- Social Icons -->
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/nuria-mateos/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,240 @@
+/* Body styling */
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #7ea3c7;
+}
+
+
+/* Style the heading */
+h1 {
+    font-family: 'Pacifico', cursive;
+    color: #0d123a;
+    font-size: 36px;
+}
+
+
+/* Sport image styling */
+.sport-image {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.sport-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Navigation options styling */
+.options {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.options h2 {
+    color: #333;
+    font-size: 24px;
+}
+
+.options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.options li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.options li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.options li:hover {
+    background-color: #1acbc5;
+    color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Create Event section styling */
+.create-activity {
+    text-align: center;
+    background-color: rgba(252, 252, 252, 0.66);
+    padding: 46px;
+    margin: 20px auto;
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-activity h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.create-activity label {
+    display: block;
+    margin-bottom: 10px;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.create-activity input[type="date"],
+.create-activity textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.create-activity input[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.create-activity input[type="submit"]:hover {
+    background-color: #0056b3;
+    transition: background-color 0.3s;
+    margin-bottom: 15px;
+}
+
+/*------------------------------------- ACTIVITIES  --------------------------------------------- */
+/* Training Activities page styling */
+.activities {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.activities h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.activities ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.activities li {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the icon */
+.options a i {
+    font-size: 24px;
+    color: #007bff; /* Set the icon color */
+    margin-right: 10px; /* Add some margin to the right of the icon */
+}
+/*------------------------------------- end ACTIVITIES --------------------------------------- */
+
+/*------------------------------------- CALENDAR --------------------------------------------- */
+/* Style the google_calendar section */
+/* Add CSS styles for the calendar container */
+.calendar-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Add CSS styles for the tabs or buttons */
+.view-toggle {
+    margin-bottom: 10px;
+}
+
+/* Style FullCalendar container */
+#calendar {
+    background-color: #b28a8a;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #c47f7f;
+    border-radius: 5px;
+}
+
+/* Style FullCalendar title/header */
+.fc-header-toolbar {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style FullCalendar events list (month view) */
+.fc-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style individual FullCalendar events */
+.fc-event {
+    background-color: #be9494;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+/* Style event time in FullCalendar */
+.fc-event-time {
+    font-weight: bold;
+    color: #007bff;
+}
+
+/* Style event title in FullCalendar */
+.fc-event-title {
+    margin-top: 5px;
+}
+
+/* Add hover effect for FullCalendar event items */
+.fc-event:hover {
+    background-color: #f0f0f0;
+}
+
+/* Style FullCalendar day number (month view) */
+.fc-day-number {
+    font-weight: bold;
+    color: #333;
+}
+
+/*-----------------------------------end CALENDAR --------------------------------------------- */
+
+/*------------------------------------- GO BACK BUTTON  --------------------------------------- */
+
+input,
+button {
+    margin-bottom: 16px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #e7805a;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+/*------------------------------------- end BUTTON  ------------------------------------------- */
