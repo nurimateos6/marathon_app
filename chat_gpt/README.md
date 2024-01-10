@@ -23,9 +23,11 @@ The app includes a chatbot powered by OpenAI's GPT-3.5 Turbo. Feel free to ask q
 
    Create a file named `token_template.json` and add your OpenAI API key:
 
+
 4. Set up your OpenAI API key:
 
    Create a file named token_template.json and add your OpenAI API key.
+
 
 5. Run the application
     ```bash
