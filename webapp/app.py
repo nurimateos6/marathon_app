@@ -49,7 +49,6 @@ def submit_activity():
             create_event(activity_type=activity_type, activity_description=activity_description,
                          activity_date=activity_date)
 
-            # Set a success message
             message = "Event created successfully!"
 
             # Redirect to the index route with the success message
